@@ -1,0 +1,47 @@
+{% extends "first_app/base.html" %}
+{% block body_block %}
+
+<h2 align="center">Artist Name : {{ artist_info.first_name }} {{ artist_info.last_name }} </h2>
+<h2 align="center" > Instrument : {{ artist_info.instrument }} </h2>
+
+<a style="margin-bottom:10px;" class="btn btn-primary btn-md"
+href="{% url 'first_app:edit_artist' id=artist_info.id %}">Edit</a>
+
+<a style="margin-bottom:10px;" onclick="return confirm('Are Your Sure!')" class="btn btn-danger btn-md"
+href="{% url 'first_app:delete_artist' artist_id=artist_info.id %}">Delete</a>
+
+
+<h1 align="center" style="background-color:lightblue;">Artist Album list page</h1>
+<div class="row" align="center">
+  <div class="col-md-12 table-responsive" style="margin-top:20px;">
+    <table class="table">
+      <tr>
+        <th><b>Album Name</b></th>
+        <th><b>Relase Date</b></th>
+        <th><b>Reating</b></th>
+        <th><b>Action</b></th>
+      </tr>
+    {% if album_list %}
+      {% for row in album_list %}
+          <tr>
+            <td>{{ row.name }}</td>
+            <td>{{ row.release_date }}</td>
+            <td>{{ row.num_stars }}</td>
+            <td><a class="btn btn-info btn-md" href="{% url 'first_app:edit_album' album_id=row.id %}">Edit</a></td>
+          </tr>
+      {% endfor %}
+          <tr>
+            <td colspan="2" align="center"><b>All rating</b></td>
+            <td colspan="2"><b>{{ artist_rating.num_stars__avg }}</b></td>
+          </tr>
+    {% else %}
+      <tr>
+        <td colspan="3">No Album</td>
+
+      </tr>
+    {% endif %}
+    </table>
+  </div>
+</div>
+
+{% endblock %}

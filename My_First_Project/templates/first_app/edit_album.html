@@ -1,0 +1,25 @@
+{% extends "first_app/base.html" %}
+{% block body_block %}
+
+
+<h1 align="center">Edit Album</h1>
+{% if success_text %}
+<div class="alert alert-success" role="alert">
+  {{ success_text }}
+</div>
+{% endif %}
+<div class="row" align="center">
+  <div class="col-md-12" style="margin-top:20px;">
+    <form class="form-horizontal" align="center" method="post">
+      {{ album_form.as_p }}
+      {% csrf_token %}
+      <input class="btn btn-success" type="submit" name="submit" value="Edit">
+      <a onclick="return confirm('Are you sure to delete this Album!')" class="btn btn-danger"
+      href="{% url 'first_app:delete_album' album_id=album_id %}">Delete</a>
+    </form>
+  </div>
+</div>
+
+
+
+{% endblock %}

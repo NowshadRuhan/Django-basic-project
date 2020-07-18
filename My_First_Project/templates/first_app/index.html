@@ -1,0 +1,31 @@
+{% extends "first_app/base.html" %}
+{% block body_block %}
+
+<h1 align="center">Musician list page</h1>
+<div class="row" align="center">
+  <div class="col-md-12 table-responsive" style="margin-top:20px;">
+    <table class="table">
+      <tr>
+        <th><b>First Name</b></th>
+        <th><b>Last Name</b></th>
+        <th><b>Instrument</b></th>
+      </tr>
+    {% if Musician_list%}
+      {% for row in Musician_list %}
+          <tr>
+            <td><a href="{% url 'first_app:album_list' artist_id=row.id %}">{{ row.first_name }}</a></td>
+            <td>{{ row.last_name }}</td>
+            <td>{{ row.instrument }}</td>
+          </tr>
+      {% endfor %}
+    {% else %} 
+      <tr>
+        <td colspan="3">No Musicians</td>
+
+      </tr>
+    {% endif %}
+    </table>
+  </div>
+</div>
+
+{% endblock %}

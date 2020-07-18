@@ -1,0 +1,14 @@
+h1 {
+  color: red;
+}
+h2 {
+  color: blue;
+  text-shadow: 2px;
+}
+h3 {
+  color: green;
+}
+img{
+  border: 2px solid gray;
+  border-radius: 3px;
+}

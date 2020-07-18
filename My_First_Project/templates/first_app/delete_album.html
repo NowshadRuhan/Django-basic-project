@@ -1,0 +1,12 @@
+{% extends "first_app/base.html" %}
+{% block body_block %}
+
+
+{% if success_text %}
+<div class="alert alert-danger" style="margin-top:10px;" role="alert">
+  {{ success_text }}
+</div>
+{% endif %}
+
+
+{% endblock %}

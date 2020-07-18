@@ -1,0 +1,15 @@
+{% extends "first_app/base.html" %}
+{% block body_block %}
+
+<h1 align="center">Album page</h1>
+<div class="row" align="center">
+  <div class="col-md-12" style="margin-top:20px;">
+    <form class="form-horizontal" align="center" method="post">
+      {{ album_form.as_p }}
+      {% csrf_token %}
+      <input class="btn btn-success" type="submit" name="submit" value="SUBMIT">
+    </form>
+  </div>
+</div>
+
+{% endblock %}
