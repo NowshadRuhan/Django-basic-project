@@ -1,17 +1,23 @@
-{% extends "first_app/base.html" %}
-{% block body_block %}
+<!-- My_First_Project/first_app/templates/first_app/edit_artist.html -->
 
+{% load static %} <!-- Load the static template tag library -->
 
-<h1 align="center">Edit Artist</h1>
-<div class="row" align="center">
-  <div class="col-md-12" style="margin-top:20px;">
-    <form class="form-horizontal" align="center" method="post">
-      {{ Musician_Form.as_p }}
-      {% csrf_token %}
-      <input class="btn btn-primary" type="submit" name="submit" value="Edit">
-    </form>
-  </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Artist</title>
+    <link rel="stylesheet" href="{% static 'mystyles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ Musician_Form.as_p }}
+            <input class="btn btn-primary" type="submit" name="submit" value="Edit">
+        </form>
 
-
-{% endblock %}
+    </div>
+</body>
+</html>

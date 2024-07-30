@@ -1,29 +1,36 @@
 {% extends "first_app/base.html" %}
 {% block body_block %}
 
-<h1 align="center">Musician list page</h1>
+<h1 align="center">Musician List Page</h1>
 <div class="row" align="center">
   <div class="col-md-12 table-responsive" style="margin-top:20px;">
     <table class="table">
       <tr>
+        <th><b>Image</b></th>
         <th><b>First Name</b></th>
         <th><b>Last Name</b></th>
         <th><b>Instrument</b></th>
       </tr>
-    {% if Musician_list%}
-      {% for row in Musician_list %}
+      {% if musician_list %}
+        {% for row in musician_list %}
           <tr>
-            <td><a href="{% url 'first_app:album_list' artist_id=row.id %}">{{ row.first_name }}</a></td>
+            <td>
+              <a href="{% url 'first_app:album_list' artist_id=row.id %}">
+                <img src="{% if row.image %}{{ row.image.url }}{% else %}{{ MEDIA_URL }}default_musician.jpg{% endif %}"
+                     alt="{{ row.first_name }} {{ row.last_name }}"
+                     width="50" height="50">
+              </a>
+            </td>
+            <td>{{ row.first_name }}</td>
             <td>{{ row.last_name }}</td>
             <td>{{ row.instrument }}</td>
           </tr>
-      {% endfor %}
-    {% else %} 
-      <tr>
-        <td colspan="3">No Musicians</td>
-
-      </tr>
-    {% endif %}
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="4">No Musicians</td> <!-- Adjusted colspan to match the number of columns -->
+        </tr>
+      {% endif %}
     </table>
   </div>
 </div>

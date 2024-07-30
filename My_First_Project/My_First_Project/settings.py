@@ -82,6 +82,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'My_First_Project.wsgi.application'
 
+#Media files
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -91,7 +98,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'my_first_django_project',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'root@15469',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -115,8 +122,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 

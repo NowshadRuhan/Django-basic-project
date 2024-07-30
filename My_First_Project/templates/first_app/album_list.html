@@ -1,46 +1,67 @@
 {% extends "first_app/base.html" %}
 {% block body_block %}
 
-<h2 align="center">Artist Name : {{ artist_info.first_name }} {{ artist_info.last_name }} </h2>
-<h2 align="center" > Instrument : {{ artist_info.instrument }} </h2>
+<div class="container" style="margin-top: 20px;">
+  <div class="d-flex align-items-center mb-4">
+    <div>
+    <img src="{{ MEDIA_URL }}{{ artist_info.image }}" alt="{{ artist_info.first_name }} {{ artist_info.last_name }}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
+    </div>
+    <div class="ml-3">
+      <h2 style="font-family: Arial, sans-serif; margin: 0;">{{ artist_info.first_name }} {{ artist_info.last_name }}</h2>
+      <h4 style="font-family: Arial, sans-serif; color: #555; margin: 0;"> Instrument: {{ artist_info.instrument }}</h4>
+    </div>
+    <div class="ml-auto">
+      <a class="btn btn-primary btn-md mr-2" href="{% url 'first_app:edit_artist' id=artist_info.id %}">
+        <i class="fas fa-edit"></i> Edit
+      </a>
+      <a class="btn btn-danger btn-md" href="{% url 'first_app:delete_artist' artist_id=artist_info.id %}" onclick="return confirm('Are you sure?')">
+        <i class="fas fa-trash-alt"></i> Delete
+      </a>
+    </div>
+  </div>
 
-<a style="margin-bottom:10px;" class="btn btn-primary btn-md"
-href="{% url 'first_app:edit_artist' id=artist_info.id %}">Edit</a>
-
-<a style="margin-bottom:10px;" onclick="return confirm('Are Your Sure!')" class="btn btn-danger btn-md"
-href="{% url 'first_app:delete_artist' artist_id=artist_info.id %}">Delete</a>
-
-
-<h1 align="center" style="background-color:lightblue;">Artist Album list page</h1>
-<div class="row" align="center">
-  <div class="col-md-12 table-responsive" style="margin-top:20px;">
-    <table class="table">
-      <tr>
-        <th><b>Album Name</b></th>
-        <th><b>Relase Date</b></th>
-        <th><b>Reating</b></th>
-        <th><b>Action</b></th>
-      </tr>
-    {% if album_list %}
-      {% for row in album_list %}
-          <tr>
-            <td>{{ row.name }}</td>
-            <td>{{ row.release_date }}</td>
-            <td>{{ row.num_stars }}</td>
-            <td><a class="btn btn-info btn-md" href="{% url 'first_app:edit_album' album_id=row.id %}">Edit</a></td>
-          </tr>
-      {% endfor %}
-          <tr>
-            <td colspan="2" align="center"><b>All rating</b></td>
-            <td colspan="2"><b>{{ artist_rating.num_stars__avg }}</b></td>
-          </tr>
-    {% else %}
-      <tr>
-        <td colspan="3">No Album</td>
-
-      </tr>
-    {% endif %}
-    </table>
+  <div class="card">
+    <div class="card-header" style="background-color: lightblue;">
+      <h3 class="card-title text-center">Artist Album List</h3>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class="thead-light">
+            <tr>
+              <th>Album Name</th>
+              <th>Release Date</th>
+              <th>Rating</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if album_list %}
+              {% for row in album_list %}
+                <tr>
+                  <td>{{ row.name }}</td>
+                  <td>{{ row.release_date }}</td>
+                  <td>{{ row.num_stars }}</td>
+                  <td>
+                    <a class="btn btn-info btn-sm" href="{% url 'first_app:edit_album' album_id=row.id %}">
+                      <i class="fas fa-edit"></i> Edit
+                    </a>
+                  </td>
+                </tr>
+              {% endfor %}
+              <tr>
+                <td colspan="2" class="text-right"><strong>All Ratings</strong></td>
+                <td colspan="2"><strong>{{ artist_rating.num_stars__avg }}</strong></td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="4" class="text-center">No Albums Available</td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
 

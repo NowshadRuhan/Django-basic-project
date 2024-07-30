@@ -1,22 +1,32 @@
+import os
+from django.conf import settings
 from django.db import models
+from django.core.files.base import ContentFile
+from django.core.files.storage import FileSystemStorage
+from django.utils.deconstruct import deconstructible
 
-# Create your models here.
+@deconstructible
+class DefaultImageStorage(FileSystemStorage):
+    def _save(self, name, content):
+        if content.size == 0:
+            # Use default image if no image is provided
+            default_image_path = os.path.join(settings.MEDIA_ROOT, 'default_musician.jpg')
+            with open(default_image_path, 'rb') as f:
+                content = ContentFile(f.read())
+        return super()._save(name, content)
+
 class Musician(models.Model):
-    #id = models.AutoField(Primary_key = True)
-    first_name = models.CharField(max_length = 50)
-    last_name = models.CharField(max_length = 50)
-    instrument = models.CharField(max_length = 100)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    instrument = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='musicians/', storage=DefaultImageStorage(), blank=True)
 
     def __str__(self):
-        return self.first_name + " "+ self.last_name + " "+ self.instrument
-
-
-
+        return f"{self.first_name} {self.last_name} - {self.instrument}"
 
 class Album(models.Model):
-    #id = models.AutoField(Primary_key = True)
     artist = models.ForeignKey(Musician, on_delete=models.CASCADE)
-    name = models.CharField(max_length = 100)
+    name = models.CharField(max_length=100)
     release_date = models.DateField()
     rating = (
         (1, "Worst"),
@@ -28,4 +38,4 @@ class Album(models.Model):
     num_stars = models.IntegerField(choices=rating)
 
     def __str__(self):
-        return self.name + ", Rating : "+ str(self.num_stars)
+        return f"{self.name}, Rating: {self.num_stars}"
